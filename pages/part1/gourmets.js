@@ -76,6 +76,7 @@ export const getServerSideProps = async (req) => {
   const data = await fetchData(req.query.keyword);
 
   // ---------
+  const query = req?.query?.keyword ?? 'うどん';
   const host = process?.browser ? '' : API_HOST;
   const { API_HOST } = getConfig().publicRuntimeConfig;
   const debug = {
