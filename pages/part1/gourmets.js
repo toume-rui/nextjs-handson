@@ -24,9 +24,10 @@ const fetchData = async (keyword) => {
   }
 };
 
-const Shops = ({ shops }) => {
+const Shops = ({ shops, debug }) => {
   return (
     <Container component="main" maxWidth="md">
+      <div>{JSON.stringify(debug)}</div>
       <Box
         component="form"
         noValidate
@@ -73,9 +74,20 @@ const Shops = ({ shops }) => {
 
 export const getServerSideProps = async (req) => {
   const data = await fetchData(req.query.keyword);
+
+  // ---------
+  const host = process?.browser ? '' : API_HOST;
+  const { API_HOST } = getConfig().publicRuntimeConfig;
+  const debug = {
+    query: `${host}/api/shops?${query.toString()}`,
+    host,
+    API_HOST,
+  };
+  // ---------
   return {
     props: {
       shops: data,
+      debug,
     },
   };
 };
