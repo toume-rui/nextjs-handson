@@ -14,7 +14,7 @@ const fetchData = async (keyword) => {
   const { API_HOST } = getConfig().publicRuntimeConfig;
   const query = new URLSearchParams();
   if (keyword) query.set('keyword', keyword);
-  const host = process.browser ? '' : API_HOST;
+  const host = process?.browser ? '' : API_HOST;
   try {
     const res = await fetch(`${host}/api/shops?${query.toString()}`);
     return await res.json();
@@ -38,6 +38,7 @@ const Shops = ({ shops }) => {
         }}
       >
         <List>
+          {shops.length === 0 && <div>お店が見つかりません</div>}
           {shops.map((shop) => {
             return (
               <ListItem key={shop.id}>
@@ -71,7 +72,6 @@ const Shops = ({ shops }) => {
 };
 
 export const getServerSideProps = async (req) => {
-  console.log(req.query.keyword);
   const data = await fetchData(req.query.keyword);
   return {
     props: {
