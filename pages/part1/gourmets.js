@@ -15,8 +15,13 @@ const fetchData = async (keyword) => {
   const query = new URLSearchParams();
   if (keyword) query.set('keyword', keyword);
   const host = process.browser ? '' : API_HOST;
-  const res = await fetch(`${host}/api/shops?${query.toString()}`);
-  return await res.json();
+  try {
+    const res = await fetch(`${host}/api/shops?${query.toString()}`);
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
 };
 
 const Shops = ({ shops }) => {
