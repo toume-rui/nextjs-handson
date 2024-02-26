@@ -73,7 +73,8 @@ const Shops = ({ shops, debug }) => {
 };
 
 export const getServerSideProps = async (req) => {
-  const data = await fetchData(req.query.keyword);
+  //const data = await fetchData(req.query.keyword);
+  const data = [];
 
   // ---------
   //   const query = req?.query?.keyword ?? 'うどん';
